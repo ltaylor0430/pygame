@@ -23,6 +23,6 @@ NO!! just put therm together and order PyGame to cut out only those you need at 
 use:
 
 image_surf = pygame.image.load("one_big_file.bmp").convert()
-# ........
-# and for drawing only  part of it:
+
+and for drawing only  part of it:
 display_surf.blit(image_surf, (0,0) , rect_containing_coordinates_to_draw)
