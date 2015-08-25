@@ -7,11 +7,12 @@ while running():
 deinitialize()
 """
 import pygame
+import cevent
 from pygame.locals import *
 from os.path import join
+import sys
 
-
-class App:
+class App(cevent.CEvent):
 
     def __init__(self):
         self._running = True
@@ -38,12 +39,12 @@ class App:
 
     def on_cleanup(self):
         # Before quiting, we will cleanup
+        print("calling quit!")
         pygame.quit()
 
-    def on_event(self, event):
-        # Quit game event set flag to false to exit game loop
-        if event.type == pygame.QUIT:
-            self._running = False
+    def on_exit(self):
+        print("exiting...")
+        self._running = False
 
     def on_execute(self):
         # Call on_init()
@@ -60,3 +61,4 @@ if __name__ == '__main__':
     theApp = App()
     # This function contains the game loop
     theApp.on_execute()
+    sys.exit(0)
