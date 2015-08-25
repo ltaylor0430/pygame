@@ -25,7 +25,7 @@ class App(cevent.CEvent):
         self._display_surf = pygame.display.set_mode(
           self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
-        # Load Image
+        # Load Image - Convert the surface to make blitting faster
         self._image_surf = pygame.image.load(
           join("data/images", "hacker_symbol8x6.jpg")).convert()
 
