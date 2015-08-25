@@ -56,9 +56,11 @@ class App(cevent.CEvent):
         pygame.display.flip()  # Update the contents of the entire display
 
     def draw_text(self, text):
+        #determines the amount of space needed to render the text
         fontWidth, fontHeight = self.font.size(text)
+        #render(text,antialias,color,background)
         surface = self.font.render(text, True, (0, 255, 0))
-        # // makes integer division in python3
+        # // makes integer division in python3 - center text
         self._display_surf.blit(surface, ((self.width-fontWidth) // 2, (
                                            self.height - fontHeight) // 2))
 
