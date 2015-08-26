@@ -11,7 +11,7 @@ import cevent
 from pygame.locals import *
 from os.path import join
 import sys
-
+import circle
 
 class App(cevent.CEvent):
 
@@ -37,32 +37,43 @@ class App(cevent.CEvent):
         # Load Image - Convert the surface to make blitting faster
         self._background = pygame.Surface(
                               self._display_surf.get_size()).convert()
+        self._ballSurface = pygame.Surface((50, 50))
         self._image_surf = pygame.image.load(
           join("data/images", "hacker_symbol8x6.jpg")).convert()
-
+        pygame.draw.rect(self._background, (0, 255, 0), (50, 50, 100, 25))
+        self.draw_ball()
+    
     def on_loop(self):
         milliseconds = self.clock.tick(self.fps)
         self.playtime += milliseconds / 1000.0
 
     def on_render(self):
         # draw image on to background surface
-        self._background.blit(self._image_surf, (
-          self.width - self._image_surf.get_width(), 0))
+       # self._background.blit(self._image_surf, (
+        #  self.width - self._image_surf.get_width(), 0))
         # draw background
         self._display_surf.blit(self._background, (0, 0))
         # Draw FPS
         self.draw_text("FPS: {:6.3}{}PLAYTIME: {:6.3} SECONDS".format(
                        self.clock.get_fps(), " " * 5, self.playtime))
+        # Draw on  Mainbackground
         pygame.display.flip()  # Update the contents of the entire display
 
     def draw_text(self, text):
-        #determines the amount of space needed to render the text
+        # determines the amount of space needed to render the text
         fontWidth, fontHeight = self.font.size(text)
-        #render(text,antialias,color,background)
+        # render(text,antialias,color,background)
         surface = self.font.render(text, True, (0, 255, 0))
         # // makes integer division in python3 - center text
         self._display_surf.blit(surface, ((self.width-fontWidth) // 2, (
                                            self.height - fontHeight) // 2))
+
+    def draw_ball(self):
+        """ Draw circle onto ball surface at position 25,25 with radius 25
+            Because there is no line argument, ball is fill.  25,25 is exactly
+            the center of the ball surface of 50 x 50 """
+        cir = circle.Circle((255,0,0),50,50)
+        self._background.blit(cir, (50, 150))
 
     def on_cleanup(self):
         # Before quiting, we will cleanup
